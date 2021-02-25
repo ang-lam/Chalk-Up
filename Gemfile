@@ -11,4 +11,4 @@ gem 'shotgun'
 gem 'pry'
 gem 'bcrypt'
 gem 'tux'
-
+gem "faker", "~> 2.16"
