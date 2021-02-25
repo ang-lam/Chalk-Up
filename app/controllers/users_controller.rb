@@ -21,12 +21,15 @@ class UsersController < ApplicationController
     post '/signup' do
         if params[:username] == "" || params[:email] == "" || params[:password] == ""
             redirect to '/signup'
+        elsif User.find_by(:email => params[:email]) || User.find_by(:username => params[:username])
+            #USER/EMAIL EXISTS
+            redirect to '/signup'
         else
             @user = User.new(params)
             @user.save
             session[:user_id] = @user.id
             slug = @user.username.downcase.gsub(" ","-")
-            redirect to '/users/#{slug}'
+            redirect to "/users/#{slug}"
         end
     end
 
@@ -34,16 +37,17 @@ class UsersController < ApplicationController
         if !logged_in?
             erb :'users/login'
         else
-            redirect to '/feed'
+            slug = current_user.username.downcase.gsub(" ", "-")
+            redirect to "/users/#{slug}"
         end
     end
 
     post '/login' do
-        user = User.find_by(email: params[:email])
+        user = User.find_by(:email => params[:email])
         if user && user.authenticate(params[:password])
             #successful login
             session[:user_id] = user.id
-            rediret '/home'
+            redirect '/feed'
         else
             #failed login
             redirect '/login'
@@ -58,5 +62,11 @@ class UsersController < ApplicationController
             redirect to '/'
         end
     end
+
+    private
+
+    # def find_username
+    #     @user = User.find_by_slug(params[:slug])
+    # end
 
 end
