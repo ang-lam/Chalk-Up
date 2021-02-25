@@ -1,51 +1,48 @@
 class UsersController < ApplicationController
-
-    configure do
-        #set :public_folder, "public"
-        #set :views, "app/views"
-        enable :sessions
-        set :session_secret, ENV["SESSION_SECRET"]
+    
+    get '/users/:slug' do
+        @user = User.find_by_slug(params[:slug])
+        erb :'/users/show'
     end
 
     get '/signup' do
-        erb :'users/new'
-    end
-
-    post '/signup' do
-        binding.pry
-        user = User.new(params)
-        if !!user.username && !!user.email && !!user.password && !User.find_by(email: params["email"]) && User.find_by(username: params["username"])
-            #SUCCESS
-            user.save 
-            session["user_id"] = user.id 
-            redirect '/profile/#{user.username}'
+        if !logged_in?
+            erb :'users/new'
         else
-            #FAILURE
-            redirect '/signup'
+            redirect to '/feed'
         end
     end
 
-
-    get '/profile/:username' do
-        @user = User.find_by(params[:username])
-        erb :'users/profile'
+    get '/feed' do
+        #TESTING FOR LOGOUT WILL DELETE
+        erb :'users/list'
     end
 
-    patch '/profile' do
-        #patch weight, age, name
-
+    post '/signup' do
+        if params[:username] == "" || params[:email] == "" || params[:password] == ""
+            redirect to '/signup'
+        else
+            @user = User.new(params)
+            @user.save
+            session[:user_id] = @user.id
+            slug = @user.username.downcase.gsub(" ","-")
+            redirect to '/users/#{slug}'
+        end
     end
-
 
     get '/login' do
-        erb :'users/login'
+        if !logged_in?
+            erb :'users/login'
+        else
+            redirect to '/feed'
+        end
     end
 
     post '/login' do
-        user = User.find_by(email: params["email"])
-        if user.authenticate(params["password"])
+        user = User.find_by(email: params[:email])
+        if user && user.authenticate(params[:password])
             #successful login
-            session["user_id"] = user.id 
+            session[:user_id] = user.id
             rediret '/home'
         else
             #failed login
@@ -54,12 +51,12 @@ class UsersController < ApplicationController
     end
 
     delete '/logout' do
-        #add logout form on all relevant pages
-    end
-
-    post '/logout' do
-        session.clear
-        redirect '/login'
+        if logged_in?
+            session.destroy
+            redirect '/login'
+        else
+            redirect to '/'
+        end
     end
 
 end
