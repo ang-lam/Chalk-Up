@@ -2,6 +2,6 @@
 <br>
 
 <% @workout.exercises.each do |exercise| %>
-    <li><%= exercise.name %></li>
+    <li><%= exercise.name %>: <%= exercise.weight %> lbs</li>
 <% end %>
 

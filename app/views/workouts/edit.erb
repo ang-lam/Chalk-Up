@@ -1,0 +1,38 @@
+<h2>Edits for <%= @workout.date %></h2>
+
+  <form action="/log/<%= @workout.id %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="patch">
+    <label>Edit the Workout's Date:</label>
+
+    <input type="text" name="workout[date]" value="<%= @workout.date %>">
+
+    <br>
+
+
+    <h3>Existing Exercises</h3>
+    <% @exercises.each do |exercise| %>  
+      <input type="text" name="workout[names][]" value="<%= exercise.name %>"></input>
+      <input type="text" name="workout[weights][]" value="<%= exercise.weight %>"></input>
+      <br>
+    <% end %>
+    <br>
+
+    <h3>New Exercise</h3>
+    <label>Name:</label>
+    <input type="text" name="workout[exercise][name][]" id="exercise1_name"></input>  
+    <label> Weight:</label>
+    <input type="text" name="workout[exercise][weight][]" id="exercise1_weight"></input>
+    <br><br>
+    <label>Name:</label>
+    <input type="text" name="workout[exercise][name][]" id="exercise2_name"></input>  
+    <label> Weight:</label>
+    <input type="text" name="workout[exercise][weight][]" id="exercise2_weight"></input>
+    <br><br>
+    <label>Name:</label>
+    <input type="text" name="workout[exercise][name][]" id="exercise3_name"></input>  
+    <label> Weight:</label>
+    <input type="text" name="workout[exercise][weight][]" id="exercise3_weight"></input>
+    <br><br>
+
+    <input type="submit" value="Update Workout">
+  </form>

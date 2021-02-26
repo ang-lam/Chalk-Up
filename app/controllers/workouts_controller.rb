@@ -28,6 +28,9 @@ class WorkoutsController < ApplicationController
 
     get '/log/:id/edit' do
         #EDIT A WORKOUT
+        @workout = Workout.find_by(:id => params[:id])
+        @exercises = Exercise.all.select {|exercise| exercise.workout_id == @workout.id}
+        erb :'workouts/edit'
     end
 
     patch '/log/:id' do
