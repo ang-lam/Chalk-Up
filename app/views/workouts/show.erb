@@ -1,0 +1,7 @@
+<%= @workout.date %>
+<br>
+
+<% @workout.exercises.each do |exercise| %>
+    <li><%= exercise.name %></li>
+<% end %>
+

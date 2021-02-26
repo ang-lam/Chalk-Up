@@ -1,0 +1,30 @@
+<h1>Log Your Workout</h1>
+
+<form method="post" action="/log">
+  <label>Date:</label>
+  <br>
+  <input type="text" name="workout[date]">
+  <br>
+  
+
+
+  <label>Exercises:</label>
+  <br>
+  <label>Name:</label>
+  <input type="text" name="workout[exercise][name][]" id="exercise1_name"></input>  
+  <label> Weight:</label>
+  <input type="text" name="workout[exercise][weight][]" id="exercise1_weight"></input>
+  <br><br>
+  <label>Name:</label>
+  <input type="text" name="workout[exercise][name][]" id="exercise2_name"></input>  
+  <label> Weight:</label>
+  <input type="text" name="workout[exercise][weight][]" id="exercise2_weight"></input>
+  <br><br>
+  <label>Name:</label>
+  <input type="text" name="workout[exercise][name][]" id="exercise3_name"></input>  
+  <label> Weight:</label>
+  <input type="text" name="workout[exercise][weight][]" id="exercise3_weight"></input>
+  <br><br>
+  
+  <input type="submit" value="Log Workout">
+</form>
