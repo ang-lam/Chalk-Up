@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-    has_many :workouts
+    has_many :workouts, dependent: :destroy
     
     has_secure_password
 
