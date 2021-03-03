@@ -11,8 +11,8 @@
 
     <h3>Existing Exercises</h3>
     <% @exercises.each do |exercise| %>  
-      <input type="text" name="workout[exercise][name][]" value="<%= exercise.name %>"></input>
-      <input type="text" name="workout[exercise][weight][]" value="<%= exercise.weight %>"></input>
+      <input type="text" name="workout[exercise][exists][name][]" value="<%= exercise.name %>"></input>
+      <input type="text" name="workout[exercise][exists][weight][]" value="<%= exercise.weight %>"></input>
       <br>
     <% end %>
     <br>
