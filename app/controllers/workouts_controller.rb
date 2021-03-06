@@ -1,19 +1,32 @@
 class WorkoutsController < ApplicationController
 
     get '/log' do
-        @workouts = Workout.all
-        erb :'workouts/logs'
+        current_user
+        if logged_in?
+            all_workouts = Workout.all.find_all {|workout| workout.user_id == session[:user_id]}
+            @workouts = all_workouts.sort_by { |workout| workout.date.split(?/).rotate(-1).map { |e| -e.to_i}}
+            erb :'workouts/logs'
+        else
+            redirect to "/login"
+        end
+        
     end
 
     get '/log/new' do
         #CREATE NEW WORKOUT
-        erb :'workouts/new'
+        current_user
+        if logged_in?
+            erb :'workouts/new'
+        else
+            redirect to "/login"
+        end
     end
     
     get '/log/:id' do
         #READ A WORKOUT
         #if log does not exist redirect to profile page
         #if not current user cannot view
+        current_user
         find_log
         if @workout && @workout.user == current_user
             erb :'workouts/show'
@@ -24,10 +37,15 @@ class WorkoutsController < ApplicationController
 
     get '/log/:id/edit' do
         #EDIT A WORKOUT
-        find_log
-        @exercises = @workout.exercises
-        # @exercises = Exercise.all.select {|exercise| exercise.workout_id == @workout.id}
-        erb :'workouts/edit'
+        current_user
+        if logged_in?
+            find_log
+            @exercises = @workout.exercises
+            # @exercises = Exercise.all.select {|exercise| exercise.workout_id == @workout.id}
+            erb :'workouts/edit'
+        else
+            redirect to "/users/#{current_user.slug}"
+        end
     end
 
     post '/log' do 
@@ -48,7 +66,6 @@ class WorkoutsController < ApplicationController
                 unless params[:workout][:date].empty?
                     @workout.update(:date => params[:workout][:date])
                 end
-                binding.pry
                 #maybe add error message if one box is empty but the other isnt
                 names = params[:workout][:exercise][:exists][:name]
                 weights = params[:workout][:exercise][:exists][:weight]
@@ -81,10 +98,7 @@ class WorkoutsController < ApplicationController
     end
 
     delete '/log/:id' do
-        #DELETE WORKOUT
-        #find character
-        #@workout.destroy
-        #@workout.clear
+
         if logged_in?
             find_log
             if @workout && @workout.user == current_user

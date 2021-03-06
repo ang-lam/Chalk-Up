@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     
     get '/users/:slug' do
-        @user = User.find_by_slug(params[:slug])
+        current_user
         erb :'/users/show'
     end
 
@@ -9,20 +9,23 @@ class UsersController < ApplicationController
         if !logged_in?
             erb :'users/new'
         else
-            redirect to '/feed'
+            redirect to "/users/#{current_user.slug}"
         end
     end
 
-    get '/feed' do
-        #TESTING FOR LOGOUT WILL DELETE
-        erb :'users/list'
+    get '/login' do
+        if !logged_in?
+            # flash[:error] = “Please Login”
+            erb :'users/login'
+        else
+            redirect to "/users/#{current_user.slug}"
+        end
     end
 
     post '/signup' do
         if params[:username] == "" || params[:email] == "" || params[:password] == ""
             redirect to '/signup'
         elsif User.find_by(:email => params[:email]) || User.find_by(:username => params[:username])
-            #USER/EMAIL EXISTS
             redirect to '/signup'
         else
             @user = User.new(params)
@@ -33,21 +36,12 @@ class UsersController < ApplicationController
         end
     end
 
-    get '/login' do
-        if !logged_in?
-            erb :'users/login'
-        else
-            slug = current_user.username.downcase.gsub(" ", "-")
-            redirect to "/users/#{slug}"
-        end
-    end
-
     post '/login' do
         user = User.find_by(:email => params[:email])
         if user && user.authenticate(params[:password])
             #successful login
             session[:user_id] = user.id
-            redirect '/feed'
+            redirect to "/users/#{current_user.slug}"
         else
             #failed login
             redirect '/login'
@@ -59,14 +53,7 @@ class UsersController < ApplicationController
             session.destroy
             redirect '/login'
         else
-            redirect to '/'
+            redirect to '/login'
         end
     end
-
-    private
-
-    # def find_username
-    #     @user = User.find_by_slug(params[:slug])
-    # end
-
 end

@@ -12,3 +12,4 @@ gem 'pry'
 gem 'bcrypt'
 gem 'tux'
 gem "faker", "~> 2.16"
+gem "sinatra-flash", "~> 0.3.0"

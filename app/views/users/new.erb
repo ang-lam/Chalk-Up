@@ -1,17 +1,117 @@
-<h1>Create Your Profile</h1>
+<html>
+  <head>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .login{
+        width: 300px;
+        border: 5px solid green;
+        padding: 50px;
+        margin: 20px;
+        margin-bottom: 40px;
+        margin-right: 10px;
+      }
+      .login_content p{
+        font-size: 16px;
+        color: #b8b7b7;
+      }
+      .login_content h1{
+        font-size: 20px;
+        color: #ffffff;
+        margin-left 20px;
+        padding-top: 15px;
+        padding-bottom: 5px;
+      }  
+      .login_content{
+        font-size: 24px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        color: #ffffff;
+        position: absolute;
+        bottom: 200px;
+        left: 280px;
+      }
+      .button {
+        /* border: none;
+        color: white;
+        padding: 10px 28px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 20px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        display: inline-block; */
+        /* background: linear-gradient(45deg, #87adfe, #3f4057); */
+        border-radius: 6px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        text-decoration: none;
+        color: #fff;
+        box-shadow: 3px 8px 22px rgba(70, 35, 56, 0.15);
+      }
+      .button1 {
+        background-color: rgb(141, 148, 210); 
+        color: black; 
+        border: 2px solid #000000;
+      }
+      .button1:hover {
+        background-color: #ffffff;
+        color: rgb(118, 118, 118);
+      }
+      input[type=text] {
+        padding:5px; 
+        border:2px solid #ccc; 
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+      }
 
-<form method="post" action="/signup">
-  <label>Username:</label>
-  <br/>
-  <input type="text" name="username">
-  <br/>
-  <label>Email:</label>
-  <br/>
-  <input type="text" name="email">
-  <br/>
-  <label>Password:</label>
-  <br/>
-  <input type="password" name="password">
-  <br/><br/>
-  <input type="submit" value="Sign Up">
-</form>
+      input[type=text]:focus {
+        border-color:#333;
+      }
+      input[type=password] {
+        padding:5px; 
+        border:2px solid #ccc; 
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+      }
+      input[type=password]:focus {
+        border-color:#333;
+      }
+      .container{
+        height: 100vh;
+        width: 100%;
+        background-image: url(../image/background.png);
+        background-position: center;
+        background-size: cover;
+        padding-left: 5%;
+        padding-right: 5%;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="login_content">
+        <form method="post" action="/signup">
+          <center>
+            <label><h1>Username</h1></label>
+            <input type="text" name="username">
+            <label><h1>Email</h1></label>
+            <input type="text" name="email">
+            <label><h1>Password</h1></label>
+            <input type="password" name="password"><br>
+            <button class="button button1" type="submit">Sign Up</button><br>
+            <a href="/login"><p>Already have an account?</p></a>
+          </center>
+        </form>  
+      </div>
+    </div>
+</body>
