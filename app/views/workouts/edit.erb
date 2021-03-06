@@ -17,6 +17,7 @@
     <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
       <h3 class="w3-padding-64 w3-center"><b><%= @current_user.username %></b></h3>
       <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+      <a href="/users/<%= @current_user.username.downcase.gsub(" ","-") %>" onclick="w3_close()" class="w3-bar-item w3-button">HOME</a> 
       <a href="/log/new" onclick="w3_close()" class="w3-bar-item w3-button">NEW WORKOUT</a> 
       <a href="/log" onclick="w3_close()" class="w3-bar-item w3-button">LOG BOOK</a> 
       <form method="post" action="/logout">
