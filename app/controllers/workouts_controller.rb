@@ -50,12 +50,18 @@ class WorkoutsController < ApplicationController
 
     post '/log' do 
         #make sure date is acceptable entry?
+        #empty sheet cannot be submitted
         @workout = Workout.create(:date => params[:workout][:date], :user_id => session["user_id"])
         @exercises = exercise_names.zip(exercise_weights).reject{ |exercise| exercise.include?("")}
-        @exercises.each do |exercise|
-            @workout.exercises << Exercise.create(:workout_id => @workout.id, :name => exercise[0], :weight => exercise[1])      
+        if !@exercises.empty? && !@workout.date.empty?
+            @exercises.each do |exercise|
+                @workout.exercises << Exercise.create(:workout_id => @workout.id, :name => exercise[0], :weight => exercise[1])      
+            end
+            redirect to "/log/#{@workout.id}"
+        else
+            flash[:message] = "Date cannot be empty. You need at least one exercise entered to log the workout."
+            redirect to "/log/new"
         end
-        redirect to "/log/#{@workout.id}"
     end
 
     patch '/log/:id' do
