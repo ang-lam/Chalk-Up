@@ -10,9 +10,9 @@
   .w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
   .w3-third img:hover{opacity: 1}
   .form{text-align: center;}
-  .footer {position:absolute; bottom:0; width:100%; height:60px;}
   </style>
   <body class="w3-light-grey w3-content" style="max-width:1600px">
+    <!-- Sidebar/menu -->
     <!-- Sidebar/menu -->
     <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
       <h3 class="w3-padding-64 w3-center"><b><%= @current_user.username %></b></h3>
@@ -24,6 +24,8 @@
         <input type="hidden" name="_method" value="delete">
         <p><button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom" type="submit">Signout</button></p>
       </form>
+      <br><br><br><br><br>
+      <a href="https://github.com/ang-lam" onclick="w3_close()" class="w3-bar-item w3-button">&copy; ang-lam</a>
     </nav>
       
     <!-- Overlay effect when opening sidebar on small screens -->
@@ -44,7 +46,9 @@
           <br><br><br>
           <h3>Date</h3>
           <br>
-          <input type="text" name="workout[date]" value="<%= @workout.date %>">
+          <input type="date" name="workout[date]"
+            value="<%= @workout.date %>"
+            min="2010-01-01" max="2022-12-31">
           <br><br><br>
           <h3>Existing Exercises</h3>
           <% @exercises.each do |exercise| %>  
@@ -75,8 +79,5 @@
         </form>
       </div>
     </div>   
-    <div class= "footer">
-      <div class="w3-black w3-center w3-padding-24">Created by <a href="https://github.com/ang-lam" title="W3.CSS" target="_blank" class="w3-hover-opacity">ang-lam</a></div>
-    </div>
   </body>
 </html>

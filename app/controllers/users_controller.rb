@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
     
     get '/users/:slug' do
-        current_user
-        erb :'/users/show'
+        if logged_in?
+            current_user
+            erb :'/users/show'
+        else
+            redirect to "/login"
+        end
     end
 
     get '/signup' do
@@ -32,18 +36,16 @@ class UsersController < ApplicationController
             @user = User.new(params)
             @user.save
             session[:user_id] = @user.id
-            redirect to "/users/#{@user.username.slug}"
+            redirect to "/users/#{current_user.slug}"
         end
     end
 
     post '/login' do
         user = User.find_by(:email => params[:email])
         if user && user.authenticate(params[:password])
-            #successful login
             session[:user_id] = user.id
             redirect to "/users/#{current_user.slug}"
         else
-            #failed login
             flash[:message] = "Invalid login. Please try again!"
             redirect '/login'
         end
