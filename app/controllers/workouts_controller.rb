@@ -45,6 +45,7 @@ class WorkoutsController < ApplicationController
     post '/log' do 
         if logged_in?
             if all_integer?
+                binding.pry
                 @workout = Workout.create(:date => params[:workout][:date], :user_id => session["user_id"])
                 workouts_exercises
                 if !@exercises.empty? && !@workout.date.empty?
@@ -76,7 +77,7 @@ class WorkoutsController < ApplicationController
                     exercises = @workout.exercises.zip(names, weights)
                     exercises.each do |exercise|
                         if exercise.include?("")
-                            exercise[0].delete
+                            exercise[0].destroy
                         else
                             exercise[0].update(:name => exercise[1], :weight => exercise[2])
                         end
@@ -104,7 +105,7 @@ class WorkoutsController < ApplicationController
         if logged_in?
             find_log
             if @workout && @workout.user == current_user
-              @workout.delete
+              @workout.destroy
             end
             redirect to '/log'
         else
