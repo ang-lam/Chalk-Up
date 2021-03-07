@@ -2,7 +2,6 @@ ENV['SINATRA_ENV'] ||= "development"
 
 require 'bundler/setup'
 Bundler.require(:default, ENV['SINATRA_ENV'])
-require 'faker'
 
 ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
