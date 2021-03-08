@@ -45,7 +45,6 @@ class WorkoutsController < ApplicationController
     post '/log' do 
         if logged_in?
             if all_integer?
-                binding.pry
                 @workout = Workout.create(:date => params[:workout][:date], :user_id => session["user_id"])
                 workouts_exercises
                 if !@exercises.empty? && !@workout.date.empty?
