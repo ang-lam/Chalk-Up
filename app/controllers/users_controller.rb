@@ -54,9 +54,9 @@ class UsersController < ApplicationController
     delete '/logout' do
         if logged_in?
             session.destroy
+            flash[:message] = "You've been successfully logged out"
             redirect '/login'
         else
-            flash[:message] = "You've been successfully logged out"
             redirect to '/login'
         end
     end
