@@ -27,10 +27,10 @@ class UsersController < ApplicationController
 
     post '/signup' do
         if params[:username] == "" || params[:email] == "" || params[:password] == ""
-            flash[:message] = "All fields are required"
+            flash[:message] = "All fields are required!"
             redirect to '/signup'
         elsif User.find_by(:email => params[:email]) || User.find_by(:username => params[:username])
-            flash[:message] = "Email and/or username already exists"
+            flash[:message] = "Email and/or username already exists!"
             redirect to '/signup'
         else
             @user = User.new(params)
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     delete '/logout' do
         if logged_in?
             session.destroy
-            flash[:message] = "You've been successfully logged out"
+            flash[:message] = "You've been successfully logged out!"
             redirect '/login'
         else
             redirect to '/login'

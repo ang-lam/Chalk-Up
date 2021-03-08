@@ -5,7 +5,6 @@ class WorkoutsController < ApplicationController
         if logged_in?
             all_workouts = Workout.all.find_all {|workout| workout.user_id == session[:user_id]}
             @workouts = all_workouts.sort_by { |workout| workout.date}.reverse
-            # @workouts = all_workouts.sort_by { |workout| workout.date.split(?/).rotate(-1).map { |e| -e.to_i}}
             erb :'workouts/logs'
         else
             redirect to "/login"
