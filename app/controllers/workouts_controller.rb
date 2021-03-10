@@ -1,14 +1,11 @@
 class WorkoutsController < ApplicationController
 
     get '/log' do
+        not_logged_in?
         current_user
-        if logged_in?
-            all_workouts = Workout.all.find_all {|workout| workout.user_id == session[:user_id]}
-            @workouts = all_workouts.sort_by { |workout| workout.date}.reverse
-            erb :'workouts/logs'
-        else
-            redirect to "/login"
-        end  
+        all_workouts = Workout.all.find_all {|workout| workout.user_id == session[:user_id]}
+        @workouts = all_workouts.sort_by { |workout| workout.date}.reverse
+        erb :'workouts/logs'
     end
 
     get '/log/new' do
@@ -54,7 +51,7 @@ class WorkoutsController < ApplicationController
                     redirect to "/log/new"
                 end
             else
-                flash[:message] = "Weight field only accepts numbers." 
+                flash[:message] = "Weight field only accepts whole numbers." 
                 redirect to "/log/new"
             end
         else
@@ -91,7 +88,7 @@ class WorkoutsController < ApplicationController
                     redirect to "/users/#{current_user.slug}"
                 end
             else
-                flash[:message] = "Weight field only accepts numbers."
+                flash[:message] = "Weight field only accepts whole numbers."
                 redirect to "/log/#{@workout.id}/edit"
             end
         else
@@ -138,5 +135,11 @@ class WorkoutsController < ApplicationController
         @exercises.each do |exercise|
             @workout.exercises << Exercise.create(:workout_id => @workout.id, :name => exercise[0], :weight => exercise[1])      
         end
+    end
+
+    def not_logged_in?
+        unless logged_in?
+            redirect to "/login"
+        end  
     end
 end
