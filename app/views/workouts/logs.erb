@@ -49,7 +49,7 @@ li.format {text-align: left;}
                     <a href="/log/<%= workout.id %>"><h2><%= workout.date %></h2></a>
                     <% workout.exercises.each do |exercise| %> 
                         <tr>
-                            <td><%= exercise.name %></td>
+                            <td><%= exercise.name.split.map(&:capitalize).join(' ') %></td>
                             <div class="align">
                                 <td><%= exercise.weight %> lbs</td>
                             </div>

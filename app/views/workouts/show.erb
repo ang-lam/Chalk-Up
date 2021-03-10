@@ -46,7 +46,7 @@
                 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
                     <% @workout.exercises.each do |exercise| %>
                         <tr>
-                            <td><%= exercise.name %></td>
+                            <td><%= exercise.name.split.map(&:capitalize).join(' ') %></td>
                             <td><%= exercise.weight %> lbs</td>
                         </tr>
                     <% end %>  

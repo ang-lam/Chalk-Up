@@ -53,7 +53,7 @@
           <h3>Existing Exercises</h3>
           <% @exercises.each do |exercise| %>  
             Name: 
-            <input type="text" name="workout[exercise][exists][name][]" value="<%= exercise.name %>"></input> Weight:
+            <input type="text" name="workout[exercise][exists][name][]" value="<%= exercise.name.split.map(&:capitalize).join(' ') %>"></input> Weight:
             <input type="text" name="workout[exercise][exists][weight][]" value="<%= exercise.weight %>"></input> lbs
             <br><br>
           <% end %>
